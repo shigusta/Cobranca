@@ -78,3 +78,28 @@ Time: 12:20
 Phone Number: +5561992082012
 Message: Oi Antonio,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
 --------------------
+Date: 1/9/2025
+Time: 1:13
+Phone Number: +5561994121708
+Message: Oi Gustavo,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+--------------------
+Date: 1/9/2025
+Time: 1:14
+Phone Number: +5561999890828
+Message: Oi Marcio,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+--------------------
+Date: 1/9/2025
+Time: 1:15
+Phone Number: +5561992082012
+Message: Oi Antonio,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+--------------------
+Date: 1/9/2025
+Time: 1:15
+Phone Number: +5561995979443
+Message: Oi Keyla,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+--------------------
+Date: 1/9/2025
+Time: 1:16
+Phone Number: +5561996544168
+Message: Oi Murillo,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+--------------------

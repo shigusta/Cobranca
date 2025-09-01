@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Envio de Planilha - Cobrança</title>
+</head>
+<body>
+  <h1>Upload de Planilha</h1>
+  <form id="uploadForm">
+    <input type="file" id="planilha" name="file" accept=".xlsx" required>
+    <label for="delay">Delay (segundos):</label>
+    <input type="number" id="delay" name="delay" value="20" min="5">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p id="resultado"></p>
+
+  <script>
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("file", document.getElementById("planilha").files[0]);
+      formData.append("delay", document.getElementById("delay").value);
+
+      const resposta = await fetch("http://127.0.0.1:8000/upload-planilha/", {
+        method: "POST",
+        body: formData
+      });
+
+      const dados = await resposta.json();
+      document.getElementById("resultado").innerText = dados.mensagem || dados.detalhes;
+    });
+  </script>
+</body>
+</html>
