@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          // Versão do JavaScript que será gerada
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Bibliotecas usadas pelo projeto
+    "allowJs": true,                          // Permite arquivos .js
+    "skipLibCheck": true,                     // Ignora checagem de tipos em libs
+    "esModuleInterop": true,                  // Importação compatível com CommonJS
+    "allowSyntheticDefaultImports": true,     // Import default mesmo sem default export
+    "strict": true,                           // Ativa verificação estrita de tipos
+    "forceConsistentCasingInFileNames": true, 
+    "module": "ESNext",                        // Módulo de saída
+    "moduleResolution": "Node",               // Resolve módulos como Node
+    "resolveJsonModule": true,                // Permite importar .json
+    "isolatedModules": true,                  // Suporte para transpiler isolado (React)
+    "noEmit": true,                            // Não gera arquivos js, só checa tipos
+    "jsx": "react-jsx",                        // JSX moderno (React 17+)
+    "baseUrl": "src",                          // Base para imports relativos
+    "paths": {                                 // Alias de paths (opcional)
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"]
+    }
+  },
+  "include": ["src"],                         // Pasta que contém o código
+  "exclude": ["node_modules", "build"]        // Pastas ignoradas
+}

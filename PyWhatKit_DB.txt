@@ -1,105 +1,95 @@
-Date: 31/8/2025
-Time: 3:26
-Phone Number: +556199898082
-Message: Mensagem de teste direto no módulo
+Date: 1/9/2025
+Time: 17:0
+Phone Number: +55
+Message: Oi Nan,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Maio* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho, KamilaEquipe Financeiro – Kayrós Link
 --------------------
-Date: 31/8/2025
-Time: 3:28
-Phone Number: +556199898082
-Message: Mensagem de teste direto no módulo
---------------------
-Date: 31/8/2025
-Time: 3:30
+Date: 1/9/2025
+Time: 18:14
 Phone Number: +5561994121708
-Message: Mensagem de teste direto no módulo
+Message: teste mensagem
 --------------------
-Date: 31/8/2025
-Time: 3:35
+Date: 2/9/2025
+Time: 16:31
 Phone Number: +5561994121708
-Message: Olá Gustavo, você tem uma cobrança de R$ 100.00 com vencimento em 2025-08-31.
+Message: teste
 --------------------
-Date: 31/8/2025
-Time: 3:36
+Date: 2/9/2025
+Time: 16:32
 Phone Number: +5561999890828
-Message: string
+Message: teste
 --------------------
-Date: 31/8/2025
-Time: 3:36
-Phone Number: +5561999890828
-Message: Olá Marcio, esta é uma mensagem de teste do sistema de cobrança 🚀
---------------------
-Date: 31/8/2025
-Time: 3:37
-Phone Number: +5561994121708
-Message: Olá Gustavo, esta é uma mensagem de teste do sistema de cobrança 🚀
---------------------
-Date: 31/8/2025
-Time: 3:43
-Phone Number: +5561998636811
-Message: Olá Leticia, você tem uma cobrança de R$ 85.00 com vencimento em 2025-08-31.
---------------------
-Date: 31/8/2025
-Time: 11:31
-Phone Number: +5561994121708
-Message: Oi Gustavo,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
---------------------
-Date: 31/8/2025
-Time: 11:32
-Phone Number: +5561999890828
-Message: Oi Marcio,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
---------------------
-Date: 31/8/2025
-Time: 11:33
+Date: 2/9/2025
+Time: 16:33
 Phone Number: +5561992082012
-Message: Oi Antonio,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Message: teste
 --------------------
-Date: 31/8/2025
-Time: 11:34
+Date: 2/9/2025
+Time: 16:33
 Phone Number: +5561995979443
-Message: Oi Keyla,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Message: teste
 --------------------
-Date: 31/8/2025
-Time: 11:34
+Date: 2/9/2025
+Time: 16:34
 Phone Number: +5561996544168
-Message: Oi Murillo,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Message: teste
 --------------------
-Date: 31/8/2025
-Time: 12:19
-Phone Number: +5561994121708
-Message: Oi Gustavo,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Date: 2/9/2025
+Time: 16:38
+Phone Number: +5555619994121708
+Message: Teste 02
 --------------------
-Date: 31/8/2025
-Time: 12:19
-Phone Number: +5561999890828
-Message: Oi Marcio,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Date: 2/9/2025
+Time: 16:39
+Phone Number: +555561993367127
+Message: Teste 02
 --------------------
-Date: 31/8/2025
-Time: 12:20
-Phone Number: +5561992082012
-Message: Oi Antonio,Oi! Esperamos que esteja tudo bem com você.Passando aqui só para lembrar que a sua fatura referente ao mês de *Agosto* ainda está em aberto. Você podeacessá-la pelo nosso app, site ou pelo e-mail que enviamos.Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar asituação, conte com a gente! Estamos por aqui para o que for preciso.Com carinho,Equipe Financeiro – Kayrós Link
+Date: 2/9/2025
+Time: 16:39
+Phone Number: +555561993121599
+Message: Teste 02
 --------------------
-Date: 1/9/2025
-Time: 1:13
-Phone Number: +5561994121708
-Message: Oi Gustavo,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+Date: 2/9/2025
+Time: 16:40
+Phone Number: +555561996544168
+Message: Teste 02
 --------------------
-Date: 1/9/2025
-Time: 1:14
-Phone Number: +5561999890828
-Message: Oi Marcio,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+Date: 2/9/2025
+Time: 16:41
+Phone Number: +5555619994121708
+Message: Teste 02
 --------------------
-Date: 1/9/2025
-Time: 1:15
-Phone Number: +5561992082012
-Message: Oi Antonio,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+Date: 2/9/2025
+Time: 16:42
+Phone Number: +555561993367127
+Message: Teste 02
 --------------------
-Date: 1/9/2025
-Time: 1:15
-Phone Number: +5561995979443
-Message: Oi Keyla,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+Date: 2/9/2025
+Time: 16:43
+Phone Number: +555561993121599
+Message: Teste 02
 --------------------
-Date: 1/9/2025
-Time: 1:16
+Date: 2/9/2025
+Time: 16:43
+Phone Number: +555561996544168
+Message: Teste 02
+--------------------
+Date: 2/9/2025
+Time: 16:58
+Phone Number: +55619994121708
+Message: Paga oq vc deve, a equipe financeira da Kayroslink agradece!
+--------------------
+Date: 2/9/2025
+Time: 16:59
+Phone Number: +5561993367127
+Message: Paga oq vc deve, a equipe financeira da Kayroslink agradece!
+--------------------
+Date: 2/9/2025
+Time: 16:59
+Phone Number: +5561993121599
+Message: Paga oq vc deve, a equipe financeira da Kayroslink agradece!
+--------------------
+Date: 2/9/2025
+Time: 17:0
 Phone Number: +5561996544168
-Message: Oi Murillo,Olá, tudo bem? Só gostaríamos de saber se tem alguma novidade sobre o pagamento da fatura que ficou pendente?
+Message: Paga oq vc deve, a equipe financeira da Kayroslink agradece!
 --------------------

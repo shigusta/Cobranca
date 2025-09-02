@@ -1,40 +1,47 @@
-# app/whatsapp_excel.py
 import argparse
-import time
 from datetime import datetime
 from pathlib import Path
+import time
 import pandas as pd
 import pywhatkit as kit
 
-MENSAGEM_PADRAO = (
-    "Oi! Esperamos que esteja tudo bem com você.\n"
-    "Passando aqui só para lembrar que a sua fatura referente ao mês de *Maio* ainda está em aberto. Você pode\n"
-    "acessá-la pelo nosso app, site ou pelo e-mail que enviamos.\n"
-    "Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar a\n"
-    "situação, conte com a gente! Estamos por aqui para o que for preciso.\n"
-    "Com carinho, Kamila\n"
-    "Equipe Financeiro – Kayrós Link"
-)
+# Flag global para interromper o loop
+_EXECUTANDO = False
 
-def primeiro_nome(nome: str) -> str:
-    return str(nome).strip().split()[0].title() if nome else ""
+def set_execucao(rodando: bool):
+    global _EXECUTANDO
+    _EXECUTANDO = rodando
 
-def normalizar_telefone(tel: str) -> str:
-    dig = "".join(ch for ch in str(tel) if ch.isdigit())
-    if dig.startswith("55"):
-        return f"+{dig}"
-    return f"+55{dig}"
+def status_execucao():
+    return {"executando": _EXECUTANDO}
 
 def carregar_planilha(caminho: str) -> pd.DataFrame:
     df = pd.read_excel(caminho)
-    df.columns = [c.strip().upper() for c in df.columns]
-    if "NOME" not in df.columns or "TELEFONE" not in df.columns:
-        raise ValueError("A planilha precisa ter as colunas: NOME e TELEFONE")
-    for col in ["RESPONDEU", "TENTATIVAS", "ULTIMO_ENVIO", "ERRO_ULTIMO_ENVIO"]:
-        if col not in df.columns:
-            df[col] = "" if col in ["RESPONDEU", "ERRO_ULTIMO_ENVIO"] else 0
-    df["TELEFONE"] = df["TELEFONE"].apply(normalizar_telefone)
+    cols_lower = {c.lower(): c for c in df.columns}
+
+    # Aceita TITULAR/NOME e TELEFONE/NUMERO
+    nome_col = cols_lower.get("nome") or cols_lower.get("titular")
+    numero_col = cols_lower.get("numero") or cols_lower.get("telefone")
+
+    if not nome_col or not numero_col:
+        raise ValueError("A planilha precisa ter as colunas NOME/TITULAR e NUMERO/TELEFONE.")
+
+    df = df.rename(columns={
+        nome_col: "NOME",
+        numero_col: "NUMERO",
+    })
+
+    if "STATUS" not in df.columns:
+        df["STATUS"] = "nao_enviado"
+
     return df
+
+def _normaliza_numero(numero: str) -> str:
+    numero = str(numero).strip()
+    if not numero.startswith("+"):
+        # Adiciona +55 se não tiver DDI (Brasil)
+        numero = "+55" + numero
+    return numero
 
 def enviar_mensagem_instantanea(numero: str, texto: str, wait_time: int = 25):
     kit.sendwhatmsg_instantly(
@@ -45,52 +52,53 @@ def enviar_mensagem_instantanea(numero: str, texto: str, wait_time: int = 25):
         close_time=3
     )
 
-def enviar_para_nao_respondidos(df: pd.DataFrame, delay: int, msg_padrao: str):
-    filtro = ~df["RESPONDEU"].astype(str).str.lower().isin(["sim", "s", "y", "yes"])
-    pendentes = df[filtro].copy()
-    if pendentes.empty:
-        print("✔ Não há pendentes para envio.")
-        return df
-    print(f"👟 Enviando para {len(pendentes)} contato(s) não respondidos...")
-    for offset, (idx, row) in enumerate(pendentes.iterrows(), start=1):
-        nome = str(row["NOME"]).strip()
-        numero = str(row["TELEFONE"]).strip()
-        texto = f"Oi {primeiro_nome(nome)},\n\n{msg_padrao}"
-        print(f"📲 Enviando para {nome} - {numero}")
-        try:
-            enviar_mensagem_instantanea(numero, texto, wait_time=25)
-            time.sleep(delay)
-            tent = int(df.at[idx, "TENTATIVAS"]) if str(df.at[idx, "TENTATIVAS"]).isdigit() else 0
-            df.at[idx, "TENTATIVAS"] = tent + 1
-            df.at[idx, "ULTIMO_ENVIO"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            df.at[idx, "ERRO_ULTIMO_ENVIO"] = ""
-            print(f"✅ Enviado para {nome}")
-        except Exception as e:
-            df.at[idx, "ERRO_ULTIMO_ENVIO"] = str(e)
-            df.at[idx, "ULTIMO_ENVIO"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"❌ Falha com {nome}: {e}")
+def enviar_para_nao_respondidos(df: pd.DataFrame, delay: int, msg_padrao: str) -> pd.DataFrame:
+    global _EXECUTANDO
+    _EXECUTANDO = True
+    try:
+        for idx, row in df.iterrows():
+            if not _EXECUTANDO:
+                print(">>> Execução interrompida pelo usuário")
+                break
+
+            numero = _normaliza_numero(row["NUMERO"])
+            nome = str(row.get("NOME", "")).strip()
+            mensagem = (msg_padrao or "").replace("{nome}", nome)
+
+            print(f"Enviando para {numero} -> {mensagem}")
+
+            try:
+                enviar_mensagem_instantanea(numero, mensagem)
+                df.at[idx, "STATUS"] = "enviado"
+            except Exception as e:
+                df.at[idx, "STATUS"] = f"erro: {e}"
+
+            time.sleep(int(delay))
+    finally:
+        _EXECUTANDO = False
+
     return df
 
-def salvar_relatorios(df: pd.DataFrame, saida_dir: str):
-    Path(saida_dir).mkdir(parents=True, exist_ok=True)
-    andamento = Path(saida_dir) / "contatos_em_andamento.xlsx"
-    df.to_excel(andamento, index=False)
-    nao_resp = df[~df["RESPONDEU"].astype(str).str.lower().isin(["sim", "s", "y", "yes"])]
-    para_ligar = Path(saida_dir) / "nao_respondidos_para_ligar.xlsx"
-    nao_resp[["NOME", "TELEFONE"]].to_excel(para_ligar, index=False)
-    print(f"\n🗂 Arquivos salvos: {andamento}, {para_ligar}")
+def salvar_relatorios(df: pd.DataFrame, pasta_saida: str):
+    out = Path(pasta_saida)
+    out.mkdir(parents=True, exist_ok=True)
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--arquivo", default="data/contatos_teste.xlsx")
-    parser.add_argument("--saida", default="data/saida")
-    parser.add_argument("--delay", type=int, default=15)
-    parser.add_argument("--mensagem", default=None)
-    args = parser.parse_args()
-    msg = args.mensagem or MENSAGEM_PADRAO
-    df = carregar_planilha(args.arquivo)
-    df = enviar_para_nao_respondidos(df, delay=args.delay, msg_padrao=msg)
-    salvar_relatorios(df, args.saida)
+    enviados = df[df["STATUS"] == "enviado"]
+    nao_enviados = df[df["STATUS"] != "enviado"]
 
+    enviados.to_excel(out / "contatos_em_andamento.xlsx", index=False)
+    nao_enviados.to_excel(out / "nao_respondidos_para_ligar.xlsx", index=False)
+
+# (Opcional) Bloco principal para rodar como script
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Envio de mensagens WhatsApp via planilha Excel")
+    parser.add_argument("arquivo", help="Caminho da planilha Excel")
+    parser.add_argument("--delay", type=int, default=15, help="Delay entre envios (segundos)")
+    parser.add_argument("--mensagem", type=str, default="Olá {nome}, sua cobrança está pendente.", help="Mensagem padrão")
+    parser.add_argument("--saida", type=str, default="data", help="Pasta de saída dos relatórios")
+    args = parser.parse_args()
+
+    df = carregar_planilha(args.arquivo)
+    df_result = enviar_para_nao_respondidos(df, args.delay, args.mensagem)
+    salvar_relatorios(df_result, args.saida)
+    print("Processamento concluído.")

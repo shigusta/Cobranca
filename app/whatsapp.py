@@ -4,14 +4,19 @@ from app.db import SessionLocal
 from app import models
 
 
+import pywhatkit as kit
+
 def enviar_mensagem(numero: str, mensagem: str):
     try:
-        agora = datetime.datetime.now()
-        hora = agora.hour
-        minuto = agora.minute + 1  # sempre agenda 1 minuto adiante
-
-        kit.sendwhatmsg(numero, mensagem, hora, minuto, wait_time=10, tab_close=True)
-        print(f"✅ Mensagem agendada para {numero}: {mensagem[:30]}...")
+        print(f"📩 Enviando para {numero}: {mensagem[:30]}...")
+        kit.sendwhatmsg_instantly(
+            phone_no=numero,
+            message=mensagem,
+            wait_time=20,   # tempo para abrir o chat
+            tab_close=True, # fecha a aba depois
+            close_time=3    # espera antes de fechar
+        )
+        print(f"✅ Mensagem enviada para {numero}")
     except Exception as e:
         print(f"❌ Erro ao enviar mensagem para {numero}: {e}")
 
@@ -40,4 +45,5 @@ def enviar_para_todos_clientes():
 
 
 if __name__ == "__main__":
+
     enviar_para_todos_clientes()

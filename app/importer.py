@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 from sqlalchemy import select
-from .db import SessionLocal, Customer, init_db
+from .db import SessionLocal, Cliente, init_db
 from .utils import normalize_br_phone
 
 def guess_column(df, contains: str):
@@ -40,7 +40,7 @@ def run(file: str, col_name: str | None, col_phone: str | None, col_status: str 
 
         status = str(row.get(col_status, "")).strip() if col_status else "aguardando"
 
-        existing = session.execute(select(Customer).where(Customer.phone == telefone)).scalar_one_or_none()
+        existing = session.execute(select(Cliente).where(Cliente.phone == telefone)).scalar_one_or_none()
         if existing:
             if overwrite:
                 existing.name = nome or existing.name
@@ -48,7 +48,7 @@ def run(file: str, col_name: str | None, col_phone: str | None, col_status: str 
                 updated += 1
             continue
         else:
-            c = Customer(name=nome or "Sem nome", phone=telefone, status=status)
+            c = Cliente(name=nome or "Sem nome", phone=telefone, status=status)
             session.add(c)
             inserted += 1
 

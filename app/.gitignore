@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Environment
+.env
+
+# Data
+data/*
+!data/exemplo.xlsx
+
+# Saída
+data/saida/*
+
+# VSCode
+.vscode/

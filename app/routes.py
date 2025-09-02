@@ -3,8 +3,11 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app import schemas, crud, db
+from app.whatsapp import enviar_mensagem
 
 router = APIRouter()
+
+
 
 # --------- Clientes ----------
 @router.post("/clientes/", response_model=schemas.ClienteResponse)
@@ -16,6 +19,13 @@ def listar_clientes(database: Session = Depends(db.get_db)):
     return crud.listar_clientes(database)
 
 # --------- Cobranças ----------
+@router.post("/enviar")
+async def enviar_cobranca(dados: dict):
+    numero = dados["telefone"]
+    mensagem = dados["mensagem"] 
+    enviar_mensagem(numero, mensagem)
+    return {"status": "ok", "destino": numero}
+
 @router.post("/cobrancas/", response_model=schemas.CobrancaResponse)
 def criar_cobranca(cobranca: schemas.CobrancaCreate, database: Session = Depends(db.get_db)):
     return crud.criar_cobranca(database, cobranca)

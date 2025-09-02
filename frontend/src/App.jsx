@@ -1,74 +1,133 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 export default function App() {
   const [file, setFile] = useState(null);
   const [delay, setDelay] = useState(20);
-  const [mensagem, setMensagem] = useState(`Oi! Esperamos que esteja tudo bem com você.
-Passando aqui só para lembrar que a sua fatura referente ao mês de *Maio* ainda está em aberto. Você pode
-acessá-la pelo nosso app, site ou pelo e-mail que enviamos.
-Se o pagamento já foi feito, por favor, desconsidere este aviso. E, se precisar de qualquer ajuda para regularizar a
-situação, conte com a gente! Estamos por aqui para o que for preciso.
-Com carinho, Kamila
-Equipe Financeiro – Kayrós Link`);
+  const [mensagem, setMensagem] = useState(
+    "Oi {nome}! Esta é uma mensagem de teste."
+  );
   const [status, setStatus] = useState("");
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleEnviar() {
     if (!file) {
-      setStatus("Selecione um arquivo .xlsx antes de enviar.");
+      setStatus("Selecione uma planilha .xlsx primeiro.");
       return;
     }
-    setStatus("Enviando arquivo...");
-    const form = new FormData();
-    form.append("file", file);
-    form.append("delay", String(delay));
-    form.append("mensagem", mensagem);
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("delay", String(delay));
+    fd.append("mensagem", mensagem);
 
+    setStatus("Iniciando… (abra o WhatsApp Web e faça login)");
     try {
-      const res = await fetch(`${API_URL}/upload`, {
-        method: "POST",
-        body: form,
-      });
-      if (!res.ok) {
-        const text = await res.text();
-        setStatus(`Erro do servidor: ${res.status} ${text}`);
-        return;
+      const resp = await fetch(`${API}/upload`, { method: "POST", body: fd });
+      const data = await resp.json();
+      if (resp.ok) {
+        setStatus("Envio iniciado. As abas do WhatsApp vão abrir aos poucos.");
+      } else {
+        setStatus(`Erro: ${data.detail || "Falha ao iniciar envio"}`);
       }
-      const data = await res.json();
-      setStatus(`Arquivo enviado. Nome salvo: ${data.filename}\nProcessamento em background.`);
-    } catch (err) {
-      setStatus("Erro ao enviar: " + String(err));
+    } catch (e) {
+      setStatus(`Erro ao conectar: ${e}`);
     }
   }
 
+  async function handleParar() {
+    try {
+      const resp = await fetch(`${API}/parar`, { method: "POST" });
+      if (resp.ok) setStatus("Envio interrompido.");
+      else setStatus("Não foi possível interromper agora.");
+    } catch (e) {
+      setStatus(`Erro ao parar: ${e}`);
+    }
+  }
+
+  const page = {
+    wrapper: {
+      minHeight: "100vh",
+      background: "#0b0b0b",
+      color: "#f3f3f3",
+      padding: "2rem",
+      fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
+    },
+    input: {
+      background: "#111",
+      border: "1px solid #333",
+      color: "#fff",
+      padding: "10px",
+      borderRadius: 10,
+      width: "100%",
+    },
+    btn: (bg) => ({
+      background: bg,
+      padding: "10px 16px",
+      borderRadius: 10,
+      border: "none",
+      color: "#fff",
+      fontWeight: 700,
+      cursor: "pointer",
+    }),
+    status: {
+      marginTop: 16,
+      padding: 12,
+      background: "#111",
+      border: "1px solid #333",
+      borderRadius: 12,
+      color: "#a7f3d0",
+      fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+    },
+  };
+
   return (
-    <div style={{fontFamily: 'Arial, sans-serif', padding: 24, maxWidth: 760, margin: '0 auto'}}>
-      <h1>Upload de planilha — Cobrança</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{marginBottom: 12}}>
-          <label>Planilha (.xlsx)</label><br/>
-          <input type="file" accept=".xlsx" onChange={(e)=>setFile(e.target.files?.[0]||null)} />
-        </div>
+    <div style={page.wrapper}>
+      <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>
+        KAYROSLINK planilha — Cobrança
+      </h1>
 
-        <div style={{marginBottom: 12}}>
-          <label>Delay entre envios (segundos)</label><br/>
-          <input type="number" value={delay} min={5} onChange={e=>setDelay(Number(e.target.value))} />
-        </div>
+      <label style={{ display: "block", marginTop: 16 }}>Planilha (.xlsx)</label>
+      <input
+        type="file"
+        accept=".xlsx,.xls"
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+      />
 
-        <div style={{marginBottom: 12}}>
-          <label>Mensagem</label><br/>
-          <textarea rows={8} value={mensagem} onChange={e=>setMensagem(e.target.value)} style={{width:'100%'}} />
-        </div>
+      <label style={{ display: "block", marginTop: 16 }}>
+        Atraso entre envios (segundos)
+      </label>
+      <input
+        type="number"
+        min={5}
+        value={delay}
+        onChange={(e) => setDelay(Number(e.target.value))}
+        style={page.input}
+      />
 
-        <button type="submit" style={{padding:'8px 12px'}}>Enviar e processar</button>
-      </form>
+      <label style={{ display: "block", marginTop: 16 }}>Mensagem</label>
+      <textarea
+        rows={8}
+        value={mensagem}
+        onChange={(e) => setMensagem(e.target.value)}
+        placeholder="Escreva a mensagem. Use {nome} para personalizar."
+        style={{ ...page.input, resize: "vertical" }}
+      />
 
-      <div style={{marginTop:20, whiteSpace:'pre-wrap', background:'#f8f8f8', padding:12}}>
-        {status || "Status aparecerá aqui."}
+      <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
+        <button style={page.btn("#16a34a")} onClick={handleEnviar}>
+          Iniciar envio
+        </button>
+        <button style={page.btn("#dc2626")} onClick={handleParar}>
+          Parar
+        </button>
       </div>
 
-      <p style={{marginTop:12, color:'#666'}}>Nota: antes de enviar, abra e faça login no <b>WhatsApp Web</b> no navegador padrão.</p>
+      <div style={page.status}>{status || "Status aparecerá aqui."}</div>
+
+      <p style={{ marginTop: 8, fontSize: 12, color: "#9ca3af" }}>
+        Dica: mantenha o <strong>WhatsApp Web</strong> logado no navegador
+        padrão.
+      </p>
     </div>
   );
 }
