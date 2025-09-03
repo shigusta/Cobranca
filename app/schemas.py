@@ -12,10 +12,12 @@ class ClienteBase(BaseModel):
 class ClienteCreate(ClienteBase):
     pass
 
-class ClienteResponse(ClienteBase):
+class ClienteResponse(BaseModel):
     id: int
+    nome: str
+    telefone: str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # -------------------
 # Cobranca

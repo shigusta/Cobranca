@@ -1,13 +1,20 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-
+from pydantic import BaseModel
+from app.services import twilio_service as mensagens
+from app.services.twilio_service import send_whatsapp_twilio
+from app.services.pywhatkit_service import send_whatsapp_pywhatkit
 from app import schemas, crud, db
 from app.whatsapp import enviar_mensagem
 
 router = APIRouter()
 
-
+# --------- Modelo para WhatsApp ----------
+class MessageRequest(BaseModel):
+    to: str
+    message: str
+    provider: str # "twilio" ou "pywhatkit"
 
 # --------- Clientes ----------
 @router.post("/clientes/", response_model=schemas.ClienteResponse)
@@ -22,7 +29,8 @@ def listar_clientes(database: Session = Depends(db.get_db)):
 @router.post("/enviar")
 async def enviar_cobranca(dados: dict):
     numero = dados["telefone"]
-    mensagem = dados["mensagem"] 
+    mensagem = dados["mensagem"]
+    
     enviar_mensagem(numero, mensagem)
     return {"status": "ok", "destino": numero}
 
@@ -47,3 +55,13 @@ def atualizar_status(cobranca_id: int, payload: schemas.CobrancaStatusUpdate, da
     if not c:
         raise HTTPException(status_code=404, detail="Cobrança não encontrada")
     return c
+
+# --------- WhatsApp ----------
+@router.post("/whatsapp/send", tags=["WhatsApp"])
+def send_message(req: MessageRequest):
+    if req.provider == "twilio":
+        return send_whatsapp_twilio(req.to, req.message)
+    elif req.provider == "pywhatkit":
+        return send_whatsapp_pywhatkit(req.to, req.message)
+    else:
+        return {"error": "Invalid provider. Use 'twilio' or 'pywhatkit'."}

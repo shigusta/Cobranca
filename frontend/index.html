@@ -1,13 +1,59 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KayrósLink — Envio de Cobrança</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="top">
+      <div class="logo-wrap">
+        <img src="logo.png" alt="KayrósLink" class="logo" />
+        <div class="brand">
+          <h1>KayrósLink</h1>
+          <p>Envio de cobranças — WhatsApp</p>
+        </div>
+      </div>
+      <div class="status-dot" id="connection-indicator" title="Conexão com a API"></div>
+    </header>
+
+    <section class="card">
+      <h2>Importar planilha (.xlsx)</h2>
+
+      <label class="file-label">
+        <input type="file" id="fileInput" accept=".xlsx,.xls" />
+        <span id="fileName">Nenhum arquivo selecionado</span>
+      </label>
+
+      <label class="field">
+        <span>Mensagem (use <code>{nome}</code> para personalizar)</span>
+        <textarea id="mensagem" placeholder="Escreva a mensagem que será enviada..." rows="6">
+Oi {nome}, estamos entrando em contato para lembrar da sua fatura. Caso já tenha regularizado, desconsidere.
+        </textarea>
+      </label>
+
+      <label class="field small">
+        <span>Delay entre envios (segundos)</span>
+        <input type="number" id="delay" value="20" min="5" />
+      </label>
+
+      <div class="actions">
+        <button id="btnUpload" class="btn primary">Enviar e processar</button>
+        <button id="btnClear" class="btn ghost">Limpar</button>
+      </div>
+
+      <div id="result" class="result" aria-live="polite">
+        Status aparecerá aqui.
+      </div>
+    </section>
+
+    <footer class="foot">
+      <small>KayrósLink • Testes locais • Modo: <span id="modeLabel">Desconhecido</span></small>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
 </html>

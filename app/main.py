@@ -12,8 +12,12 @@ from .whatsapp_excel import (
     set_execucao,
     status_execucao,
 )
+from app import routes
 
 app = FastAPI(title="Cobrancas Bot")
+
+# Incluir o router do WhatsApp
+app.include_router(routes.router)
 
 app.add_middleware(
     CORSMiddleware,
