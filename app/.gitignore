@@ -2,18 +2,20 @@
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.db
+
+# Virtualenv
+.venv/
 
 # Environment
 .env
 
-# Data
-data/*
-!data/exemplo.xlsx
+# Excel de dados reais
+data/*.xlsx
+!data/create_example.py
 
-# Saída
-data/saida/*
+# Saída gerada
+data/saida/
 
-# VSCode
-.vscode/
+# Node
+frontend/node_modules/
+frontend/dist/

@@ -12,7 +12,7 @@ def enviar_mensagem(numero: str, mensagem: str):
         kit.sendwhatmsg_instantly(
             phone_no=numero,
             message=mensagem,
-            wait_time=20,   # tempo para abrir o chat
+            wait_time=5,   # tempo para abrir o chat
             tab_close=True, # fecha a aba depois
             close_time=3    # espera antes de fechar
         )
@@ -35,7 +35,7 @@ def enviar_para_todos_clientes():
         
         agora = datetime.datetime.now()
         hora = agora.hour
-        minuto = agora.minute + i  # agenda cada mensagem 1 min depois da outra
+        minuto = agora.minute + i 
 
         try:
             kit.sendwhatmsg(cliente.telefone, mensagem, hora, minuto, wait_time=10, tab_close=True)

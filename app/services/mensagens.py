@@ -21,21 +21,16 @@ def enviar_mensagem(telefone: str, mensagem: str, modo_instantaneo: bool = True,
         agora = datetime.datetime.now()
 
         if modo_instantaneo:
-            # tentativa "instantânea"
-            # sendwhatmsg_instantly internamente usa pyautogui e pode falhar se
-            # o navegador estiver com comportamento diferente; testamos com wait_time maior
             kit.sendwhatmsg_instantly(
                 phone_no=telefone,
                 message=mensagem,
                 wait_time=wait_time,
-                tab_close=False,   # mantenha aberto para debug; depois pode mudar
+                tab_close=False,  
                 close_time=3
             )
-            # dar um pequeno sleep para garantir que o pyautogui executou ações
             time.sleep(2)
             return {"ok": True, "detalhe": "agendado/iniciado (instantâneo)"}
         else:
-            # agenda um minuto à frente — pywhatkit exige agendamento
             hora = agora.hour
             minuto = (agora.minute + 1) % 60
             kit.sendwhatmsg(telefone, mensagem, hora, minuto, wait_time=wait_time, tab_close=False)

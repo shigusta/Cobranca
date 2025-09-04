@@ -63,7 +63,6 @@ async def upload_planilha(
     with destino.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # 🔥 Executa direto (sem background) para testar
     _processar_planilha(str(destino), int(delay), mensagem)
 
     return {"ok": True, "filename": str(destino)}
